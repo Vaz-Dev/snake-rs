@@ -32,7 +32,7 @@ impl GameState {
         Ok(())
     }
 
-    pub fn load(mut state: &mut Self, save_name: String) -> Result<(), io::Error> {
+    pub fn load(state: &mut Self, save_name: String) -> Result<(), io::Error> {
         let file_name = format!("{save_name}.json");
         let serialized = fs::read_to_string(file_name)?;
         let loaded_state: GameState = serde_json::from_str(serialized.as_str())?;
