@@ -1,6 +1,8 @@
 use crate::{engine::engine, input::input, output::output, state::GameState};
-
 mod engine;
+mod features {
+    pub mod menu;
+}
 mod input;
 mod output;
 mod state;

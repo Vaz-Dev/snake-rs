@@ -1,3 +1,4 @@
+use crate::features::menu::state::Menu;
 use serde::{Deserialize, Serialize};
 use std::{fs, io};
 
@@ -6,7 +7,7 @@ pub struct GameState {
     pub quit: bool,
     pub startup: bool,
     pub current: Option<String>,
-    pub menu: bool,
+    pub menu: Option<Menu>,
 }
 
 impl GameState {
@@ -15,7 +16,7 @@ impl GameState {
             quit: false,
             startup: true,
             current: None,
-            menu: false,
+            menu: None,
         }
     }
 
