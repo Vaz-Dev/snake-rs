@@ -16,7 +16,7 @@ impl GameState {
             quit: false,
             startup: true,
             current: None,
-            menu: None,
+            menu: Some(Menu::new()),
         }
     }
 

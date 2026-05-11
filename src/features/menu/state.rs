@@ -13,3 +13,12 @@ pub enum MenuOptions {
     Load,
     Quit,
 }
+
+impl Menu {
+    pub fn new() -> Self {
+        Menu {
+            current: MenuOptions::New,
+            options: vec![MenuOptions::New, MenuOptions::Load, MenuOptions::Quit],
+        }
+    }
+}

@@ -8,12 +8,15 @@ mod output;
 mod state;
 
 fn main() {
-    let terminal = ratatui::init();
+    let mut terminal = ratatui::init();
     let mut prev_state = GameState::new();
+    {
+        output(&prev_state, &mut terminal);
+    }
     loop {
         let input = input();
         let state = engine(input, prev_state);
-        output(&state, &terminal);
+        output(&state, &mut terminal);
         if state.quit {
             break;
         }
