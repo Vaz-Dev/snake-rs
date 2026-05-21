@@ -7,6 +7,7 @@ pub struct GameState {
     pub quit: bool,
     pub startup: bool,
     pub current: Option<String>,
+    #[serde(skip)]
     pub menu: Option<Menu>,
 }
 
