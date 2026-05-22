@@ -1,22 +1,23 @@
 use crate::{engine::engine, input::input, output::output, state::GameState};
 mod engine;
+mod terminal;
 mod features {
     pub mod menu;
+    pub mod prompt;
 }
 mod input;
 mod output;
 mod state;
 
 fn main() {
-    let mut terminal = ratatui::init();
     let mut prev_state = GameState::new();
     {
-        output(&prev_state, &mut terminal);
+        output(&prev_state);
     }
     loop {
         let input = input();
         let state = engine(input, prev_state);
-        output(&state, &mut terminal);
+        output(&state);
         if state.quit {
             break;
         }

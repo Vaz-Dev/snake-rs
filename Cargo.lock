@@ -1051,16 +1051,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 
 [[package]]
-name = "rogue_like"
-version = "0.1.0"
-dependencies = [
- "crossterm",
- "ratatui",
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "rustc_version"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1208,6 +1198,16 @@ name = "smallvec"
 version = "1.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
+
+[[package]]
+name = "snake"
+version = "0.1.0"
+dependencies = [
+ "crossterm",
+ "ratatui",
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "static_assertions"
