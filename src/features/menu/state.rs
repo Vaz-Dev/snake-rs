@@ -9,11 +9,11 @@ use serde::{Deserialize, Serialize};
 pub struct Menu {
     pub current: MenuOptions,
     pub options: Vec<MenuOptions>,
-    pub state: RefCell<ListState>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub enum MenuOptions {
+    Continue,
     New,
     Save,
     Load,
@@ -25,7 +25,6 @@ impl Menu {
         Menu {
             current: MenuOptions::New,
             options: vec![MenuOptions::New, MenuOptions::Load, MenuOptions::Quit],
-            state: RefCell::new(ListState::default().with_selected(Some(0))),
         }
     }
 
@@ -37,10 +36,8 @@ impl Menu {
                 .position(|opt| opt == &self.current)
                 .expect("Menu was supposed to be an Vec");
             if index == 0 {
-                self.state.borrow_mut().select_last();
                 self.options[self.options.len() - 1].clone()
             } else {
-                self.state.borrow_mut().select_previous();
                 self.options[index - 1].clone()
             }
         }
@@ -54,10 +51,8 @@ impl Menu {
                 .position(|opt| opt == &self.current)
                 .expect("Menu was supposed to be an Vec");
             if index == self.options.len() - 1 {
-                self.state.borrow_mut().select_first();
                 self.options[0].clone()
             } else {
-                self.state.borrow_mut().select_next();
                 self.options[index + 1].clone()
             }
         }
@@ -67,6 +62,7 @@ impl Menu {
 impl Display for MenuOptions {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         match self {
+            MenuOptions::Continue => write!(f, "Continue"),
             MenuOptions::New => write!(f, "New Game"),
             MenuOptions::Save => write!(f, "Save"),
             MenuOptions::Load => write!(f, "Load"),

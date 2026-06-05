@@ -1,5 +1,3 @@
-use std::io::stdout;
-
 use ratatui::Frame;
 
 use crate::{state::GameState, terminal::get_terminal};

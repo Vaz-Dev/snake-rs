@@ -2,6 +2,7 @@ use crate::{engine::engine, input::input, output::output, state::GameState};
 mod engine;
 mod terminal;
 mod features {
+    pub mod coord;
     pub mod menu;
     pub mod prompt;
 }

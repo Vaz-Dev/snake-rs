@@ -1,11 +1,10 @@
 use crossterm::event::KeyCode;
-use ratatui::Frame;
 
 use crate::{input::input, output::Render, terminal::get_terminal};
 
 pub struct Prompt {
-    quesion: &'static str,
-    input: String,
+    pub question: &'static str,
+    pub input: String,
     done: bool,
 }
 
@@ -14,12 +13,12 @@ impl Prompt {
         Prompt {
             input: String::from(""),
             done: false,
-            quesion: question,
+            question,
         }
     }
 }
 
-pub fn prompt(question: &'static str) -> String {
+pub fn prompt(question: &'static str) -> Option<String> {
     let mut new_prompt = Prompt::new(question);
     let mut terminal = get_terminal();
     while !new_prompt.done {
@@ -27,10 +26,12 @@ pub fn prompt(question: &'static str) -> String {
         let input = input();
         if input == KeyCode::Enter {
             new_prompt.done = true;
+        } else if input == KeyCode::Esc {
+            return None;
         } else if let KeyCode::Char(char) = input {
             new_prompt.input.push(char);
         }
     }
 
-    new_prompt.input
+    Some(new_prompt.input)
 }

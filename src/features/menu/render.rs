@@ -1,8 +1,8 @@
 use ratatui::{
     layout::{Constraint, Layout},
-    style::{Color, Modifier},
+    style::{Color, Modifier, Stylize},
     text::Line,
-    widgets::{Block, List, ListItem, Padding},
+    widgets::{Block, List, ListItem, ListState, Padding},
     Frame,
 };
 
@@ -18,7 +18,7 @@ impl Render for Menu {
         let areas = Layout::vertical(constraints).split(frame.area());
 
         let top = areas[0];
-        let title = Line::from("Placeholder");
+        let title = Line::from("Snake - By VazDev (Made in Rust)").bold().blue();
         frame.render_widget(title.centered(), top);
 
         let block = Block::default().padding(Padding::new(2, 2, 1, 1));
@@ -33,6 +33,13 @@ impl Render for Menu {
             .style(Color::White)
             .highlight_style(Modifier::REVERSED)
             .highlight_symbol("> ");
-        frame.render_stateful_widget(list, middle, &mut self.state.borrow_mut());
+        let mut list_state = ListState::default();
+        let index = self
+            .options
+            .iter()
+            .position(|opt| opt == &self.current)
+            .expect("Menu was supposed to be an Vec");
+        list_state.select(Some(index));
+        frame.render_stateful_widget(list, middle, &mut list_state);
     }
 }
