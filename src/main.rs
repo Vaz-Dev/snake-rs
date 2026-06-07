@@ -5,6 +5,7 @@ mod features {
     pub mod coord;
     pub mod menu;
     pub mod prompt;
+    pub mod snake;
 }
 mod input;
 mod output;
