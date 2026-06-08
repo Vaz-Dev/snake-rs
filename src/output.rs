@@ -6,6 +6,10 @@ pub fn output(state: &GameState) {
     let mut terminal = get_terminal();
     if let Some(menu) = &state.menu {
         terminal.draw(|frame| menu.render(frame)).unwrap();
+    } else if let Some(current_game) = &state.current {
+        terminal
+            .draw(|frame| current_game.snake.render(frame))
+            .unwrap();
     }
 }
 

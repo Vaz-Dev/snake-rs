@@ -1,13 +1,15 @@
-use crate::features::menu::state::Menu;
+use crate::features::{menu::state::Menu, snake::state::Snake};
 use serde::{Deserialize, Serialize};
-use std::{fs, io};
+use std::{cell::RefCell, fs, io, rc::Rc};
 
 #[derive(Serialize, Deserialize)]
 pub struct GameState {
     pub quit: bool,
+    #[serde(skip)]
     pub current: Option<GameData>,
     #[serde(skip)]
     pub menu: Option<Menu>,
+    pub score: u16,
 }
 
 impl GameState {
@@ -16,6 +18,7 @@ impl GameState {
             quit: false,
             current: None,
             menu: Some(Menu::new()),
+            score: 3,
         }
     }
 
@@ -31,7 +34,8 @@ impl GameState {
     pub fn load(&mut self, save_name: String) -> Result<(), io::Error> {
         let file_name = format!("{save_name}.json");
         let serialized = fs::read_to_string(file_name)?;
-        let loaded_state: GameState = serde_json::from_str(serialized.as_str())?;
+        let mut loaded_state: GameState = serde_json::from_str(serialized.as_str())?;
+        loaded_state.current = Some(GameData::new(loaded_state.score));
         *self = loaded_state;
 
         Ok(())
@@ -39,17 +43,24 @@ impl GameState {
 
     pub fn start(&mut self) {
         self.menu = None;
-        self.current = Some(GameData::new());
+        self.current = Some(GameData::default());
     }
 }
 
-#[derive(Serialize, Deserialize)]
 pub struct GameData {
-    length: u16,
+    pub snake: Rc<RefCell<Snake>>,
 }
 
 impl GameData {
-    fn new() -> Self {
-        Self { length: 3 }
+    fn new(length: u16) -> Self {
+        Self {
+            snake: Snake::new(length),
+        }
+    }
+}
+
+impl Default for GameData {
+    fn default() -> Self {
+        GameData::new(3)
     }
 }

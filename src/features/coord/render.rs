@@ -1,8 +1,4 @@
-use ratatui::{
-    layout::Rect,
-    text::{Text, ToSpan},
-    Frame,
-};
+use ratatui::{layout::Rect, text::Text, Frame};
 
 use crate::{features::coord::state::Coord, output::Render};
 
