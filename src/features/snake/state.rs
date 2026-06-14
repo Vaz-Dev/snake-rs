@@ -1,14 +1,10 @@
-use std::{
-    cell::RefCell,
-    rc::{Rc, Weak},
-};
+use std::{cell::RefCell, rc::Rc};
 
 use crate::features::coord::state::Coord;
 
 pub struct Snake {
     pub position: Coord,
     pub direction: Direction,
-    pub prev: Option<Weak<RefCell<Snake>>>,
     pub next: Option<Rc<RefCell<Snake>>>,
 }
 
@@ -30,7 +26,6 @@ impl Snake {
                 color: Some(ratatui::style::Color::Green),
             },
             direction: Direction::Up,
-            prev: None,
             next: None,
         };
         let ref_cell = RefCell::new(snake);
@@ -40,6 +35,9 @@ impl Snake {
     }
 
     fn new_parts(this: Rc<RefCell<Self>>, quantity: u16) {
+        if quantity == 0 {
+            return;
+        }
         if let Some(next) = &this.borrow().next {
             Snake::new_parts(next.clone(), quantity);
         } else {
@@ -61,14 +59,12 @@ impl Snake {
                     color: position.color,
                 },
                 direction,
-                prev: Some(Rc::downgrade(&this)),
                 next: None,
             };
             let ref_cell = RefCell::new(part);
             let rc = Rc::new(ref_cell);
-            if quantity != 0 {
-                Snake::new_parts(rc.clone(), quantity - 1);
-            }
+            Snake::new_parts(rc.clone(), quantity - 1);
+            this.borrow_mut().next = Some(rc);
         }
     }
 

@@ -43,7 +43,7 @@ impl GameState {
 
     pub fn start(&mut self) {
         self.menu = None;
-        self.current = Some(GameData::default());
+        self.current = Some(GameData::new(self.score));
     }
 }
 
@@ -56,11 +56,5 @@ impl GameData {
         Self {
             snake: Snake::new(length),
         }
-    }
-}
-
-impl Default for GameData {
-    fn default() -> Self {
-        GameData::new(3)
     }
 }
