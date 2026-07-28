@@ -8,7 +8,10 @@ pub fn output(state: &GameState) {
         terminal.draw(|frame| menu.render(frame)).unwrap();
     } else if let Some(current_game) = &state.current {
         terminal
-            .draw(|frame| current_game.snake.render(frame))
+            .draw(|frame| {
+                current_game.snake.render(frame);
+                current_game.food.render(frame);
+            })
             .unwrap();
     }
 }

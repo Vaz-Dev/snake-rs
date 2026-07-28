@@ -1,4 +1,4 @@
-use crate::features::{menu::state::Menu, snake::state::Snake};
+use crate::features::{food::state::Food, menu::state::Menu, snake::state::Snake};
 use serde::{Deserialize, Serialize};
 use std::{cell::RefCell, fs, io, rc::Rc};
 
@@ -49,12 +49,14 @@ impl GameState {
 
 pub struct GameData {
     pub snake: Rc<RefCell<Snake>>,
+    pub food: Food,
 }
 
 impl GameData {
     fn new(length: u16) -> Self {
         Self {
             snake: Snake::new(length),
+            food: Food::new(),
         }
     }
 }

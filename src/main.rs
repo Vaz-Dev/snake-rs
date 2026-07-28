@@ -3,6 +3,7 @@ mod engine;
 mod terminal;
 mod features {
     pub mod coord;
+    pub mod food;
     pub mod menu;
     pub mod prompt;
     pub mod snake;
