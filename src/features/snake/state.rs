@@ -34,7 +34,7 @@ impl Snake {
         rc
     }
 
-    fn new_parts(this: Rc<RefCell<Self>>, quantity: u16) {
+    pub fn new_parts(this: Rc<RefCell<Self>>, quantity: u16) {
         if quantity == 0 {
             return;
         }

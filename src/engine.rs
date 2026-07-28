@@ -60,6 +60,7 @@ pub fn engine(input: KeyCode, mut state: GameState) -> GameState {
             }
             _ => Snake::turn_and_move(snake, None),
         }
+        current_game.check_collision();
     }
 
     state

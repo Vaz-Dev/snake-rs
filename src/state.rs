@@ -59,4 +59,14 @@ impl GameData {
             food: Food::new(),
         }
     }
+
+    pub fn check_collision(&mut self) {
+        let snake = self.snake.borrow_mut();
+        let food = self.food.clone();
+        let collided = snake.position.x == food.coord.x && snake.position.y == food.coord.y;
+        drop(snake);
+        if collided {
+            Snake::new_parts(self.snake.clone(), 1);
+        }
+    }
 }

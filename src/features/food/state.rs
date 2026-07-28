@@ -2,6 +2,7 @@ use ratatui::style::Color;
 
 use crate::features::coord::state::Coord;
 
+#[derive(Clone)]
 pub struct Food {
     pub coord: Coord,
 }
